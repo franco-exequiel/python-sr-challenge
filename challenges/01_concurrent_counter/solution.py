@@ -13,5 +13,19 @@ class Counter:
         self.count = current + 1
 
 # --- START YOUR SOLUTION HERE ---
-# Make this counter thread-safe without changing its public API.
+import threading
+
+# se crea un lock global para sincronizar las llamadas y se referencia al método original de la calse
+_counter_lock = threading.Lock()
+
+_original_increment = Counter.increment
+
+def _safe_increment(self):
+    # Se define una nueva versión segura del método increment
+    with _counter_lock:
+        return _original_increment(self)
+
+# Reemplazamos el método original por el thread-safe
+Counter.increment = _safe_increment
+
 # --- END OF YOUR SOLUTION ---
