@@ -8,11 +8,12 @@ class TempFileManager:
     def __enter__(self):
         self._temp_file = self._filename
         return self._temp_file
-
+    
+    """
     def __exit__(self, exc_type, exc_val, exc_tb):
         # Current behavior: only cleans if no exception (bug placeholder)
         if exc_type is None:
-            self._temp_file = None
+    """        
 
     @property
     def file_is_open(self):
@@ -20,4 +21,7 @@ class TempFileManager:
 
 # --- START YOUR SOLUTION HERE ---
 # Ensure cleanup always happens and exceptions are not suppressed.
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        #Se modifica el método __exit__ haciendo que SIEMPRE limpie el caché
+        self._temp_file = None
 # --- END OF YOUR SOLUTION ---
